@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Música</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+/* WIDGET AZUL COMPLETO 🔥 */
+.music-widget {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px;
+
+    background: #1e40ff; /* 🔵 azul rey */
+    border-radius: 40px;
+}
+
+/* BOTÓN (mismo color pero con leve diferencia) */
+.play-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15); /* efecto sutil */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.25);
+}
+
+/* ICONOS BLANCOS ⚪ */
+.play-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+}
+
+/* TEXTO BLANCO */
+.song-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* SLIDER */
+input[type="range"] {
+    width: 90px;
+    height: 4px;
+    accent-color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="music-widget">
+
+    <button id="playPauseBtn" class="play-btn">
+        <svg id="iconPlay" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+
+        <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
+            <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+        </svg>
+    </button>
+
+    <div class="song-title">Konny - Mis Quince Años</div>
+
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.35">
+
+</div>
+
+<audio id="backgroundMusic" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById('backgroundMusic');
+const playBtn = document.getElementById('playPauseBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+
+const iconPlay = document.getElementById('iconPlay');
+const iconPause = document.getElementById('iconPause');
+
+audio.volume = 0.35;
+
+volumeSlider.addEventListener('input', () => {
+    audio.volume = parseFloat(volumeSlider.value);
+});
+
+playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+        iconPlay.style.display = "none";
+        iconPause.style.display = "block";
+    } else {
+        audio.pause();
+        iconPlay.style.display = "block";
+        iconPause.style.display = "none";
+    }
+});
+
+window.addEventListener('load', () => {
+    audio.play().catch(() => {});
+});
+</script>
+
+</body>
+</html>
